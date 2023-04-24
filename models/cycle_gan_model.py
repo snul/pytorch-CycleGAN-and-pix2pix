@@ -1,6 +1,6 @@
 import torch
 import itertools
-from util.image_pool import ImagePool
+from pytorchCycleGANandpix2pix.util.image_pool import ImagePool
 from .base_model import BaseModel
 from . import networks
 

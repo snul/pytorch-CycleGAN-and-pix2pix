@@ -27,11 +27,11 @@ See training and test tips at: https://github.com/junyanz/pytorch-CycleGAN-and-p
 See frequently asked questions at: https://github.com/junyanz/pytorch-CycleGAN-and-pix2pix/blob/master/docs/qa.md
 """
 import os
-from options.test_options import TestOptions
-from data import create_dataset
-from models import create_model
-from util.visualizer import save_images
-from util import html
+from pytorchCycleGANandpix2pix.options.test_options import TestOptions
+from pytorchCycleGANandpix2pix.data import create_dataset
+from pytorchCycleGANandpix2pix.models import create_model
+from pytorchCycleGANandpix2pix.util.visualizer import save_images
+from pytorchCycleGANandpix2pix.util import html
 
 try:
     import wandb
@@ -39,8 +39,13 @@ except ImportError:
     print('Warning: wandb package cannot be found. The option "--use_wandb" will result in error.')
 
 
-if __name__ == '__main__':
-    opt = TestOptions().parse()  # get test options
+def testWithoutOpt(dataroot, results_dir, name, model):
+    opt = TestOptions().parse(["--dataroot", dataroot, "--results_dir", results_dir, "--name", name, "--model", model, "--no_dropout", "--checkpoints_dir", "pytorchCycleGANandpix2pix/checkpoints"])
+    print(opt.no_dropout)
+    test(opt)
+
+
+def test(opt):
     # hard-code some parameters for test
     opt.num_threads = 0   # test code only supports num_threads = 0
     opt.batch_size = 1    # test code only supports batch_size = 1
@@ -78,3 +83,7 @@ if __name__ == '__main__':
             print('processing (%04d)-th image... %s' % (i, img_path))
         save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, use_wandb=opt.use_wandb)
     webpage.save()  # save the HTML
+    
+if __name__ == '__main__':    
+    opt = TestOptions().parse()  # get test options
+    test(opt)

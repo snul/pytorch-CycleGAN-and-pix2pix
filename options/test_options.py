@@ -1,4 +1,4 @@
-from .base_options import BaseOptions
+from pytorchCycleGANandpix2pix.options.base_options import BaseOptions
 
 
 class TestOptions(BaseOptions):
