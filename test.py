@@ -39,9 +39,8 @@ except ImportError:
     print('Warning: wandb package cannot be found. The option "--use_wandb" will result in error.')
 
 
-def testWithoutOpt(dataroot, results_dir, name, model):
-    opt = TestOptions().parse(["--dataroot", dataroot, "--results_dir", results_dir, "--name", name, "--model", model, "--no_dropout", "--checkpoints_dir", "pytorchCycleGANandpix2pix/checkpoints"])
-    print(opt.no_dropout)
+def testWithoutOpt(args):
+    opt = TestOptions().parse(args)
     test(opt)
 
 
